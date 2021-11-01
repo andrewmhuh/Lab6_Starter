@@ -134,7 +134,7 @@ class RecipeCard extends HTMLElement {
       let ratingimg = document.createElement("img");
       let numRating = document.createElement("span");
       aggRating.textContent = searchForKey(data, 'ratingValue');
-      ratingimg.src = "./assets/images/icons/" + overallRating + "-star.svg";
+      ratingimg.src = "assets/images/icons/" + overallRating + "-star.svg";
       numRating.textContent = "(" + searchForKey(data, 'ratingCount') + ")";
       rating.appendChild(aggRating);
       rating.appendChild(ratingimg);
@@ -155,8 +155,6 @@ class RecipeCard extends HTMLElement {
     recipeIngredients.setAttribute('class', 'ingredients');
     recipeIngredients.textContent = createIngredientList(searchForKey(data, 'recipeIngredient'));
     card.appendChild(recipeIngredients);
-    
-    console.log(searchForKey(data, 'aggregateRating'));
   }
 }
 
