@@ -2,6 +2,9 @@ class RecipeCard extends HTMLElement {
   constructor() {
     // Part 1 Expose - TODO
 
+    super();
+    this.attachShadow({mode: 'open'});
+
     // You'll want to attach the shadow DOM here
   }
 
@@ -100,6 +103,60 @@ class RecipeCard extends HTMLElement {
     // created in the constructor()
 
     // Part 1 Expose - TODO
+
+    const root = this.shadowRoot;
+    root.appendChild(styleElem);
+    root.appendChild(card);
+
+    let recipeImage = document.createElement("img");
+    recipeImage.src = searchForKey(data, 'thumbnailUrl');
+    recipeImage.alt = searchForKey(data, 'title');
+    card.appendChild(recipeImage);
+
+    let title = document.createElement("p");
+    title.setAttribute('class', 'title');
+    let titleLink = document.createElement('a');
+    titleLink.href = getUrl(data);
+    titleLink.textContent = searchForKey(data, 'headline');
+    title.appendChild(titleLink);
+    card.appendChild(title);
+
+    let description = document.createElement("p");
+    description.textContent = getOrganization(data);
+    card.appendChild(description);
+
+    let rating = document.createElement("div");
+    rating.setAttribute('class', 'rating');
+    let overallRating = Math.round(searchForKey(data, 'ratingValue'));
+    console.log(overallRating);
+    if(overallRating >= 0 && overallRating <= 5) {
+      let aggRating = document.createElement("span");
+      let ratingimg = document.createElement("img");
+      let numRating = document.createElement("span");
+      aggRating.textContent = searchForKey(data, 'ratingValue');
+      ratingimg.src = "/assets/images/icons/" + overallRating + "-star.svg";
+      numRating.textContent = "(" + searchForKey(data, 'ratingCount') + ")";
+      rating.appendChild(aggRating);
+      rating.appendChild(ratingimg);
+      rating.appendChild(numRating);
+    }
+    else {
+      let ratingText = document.createElement("span");
+      ratingText.textContent = "No Reviews";
+      rating.appendChild(ratingText);
+    }
+    card.appendChild(rating);
+
+    let recipeTime = document.createElement("time");
+    recipeTime.textContent = convertTime(searchForKey(data, 'totalTime'));
+    card.appendChild(recipeTime);
+
+    let recipeIngredients = document.createElement("p");
+    recipeIngredients.setAttribute('class', 'ingredients');
+    recipeIngredients.textContent = createIngredientList(searchForKey(data, 'recipeIngredient'));
+    card.appendChild(recipeIngredients);
+    
+    console.log(searchForKey(data, 'aggregateRating'));
   }
 }
 
