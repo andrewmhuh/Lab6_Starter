@@ -134,7 +134,7 @@ class RecipeCard extends HTMLElement {
       let ratingimg = document.createElement("img");
       let numRating = document.createElement("span");
       aggRating.textContent = searchForKey(data, 'ratingValue');
-      ratingimg.src = "./Lab6_Starter/assets/images/icons/" + overallRating + "-star.svg";
+      ratingimg.src = "./assets/images/icons/" + overallRating + "-star.svg";
       numRating.textContent = "(" + searchForKey(data, 'ratingCount') + ")";
       rating.appendChild(aggRating);
       rating.appendChild(ratingimg);
